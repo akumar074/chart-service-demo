@@ -3,9 +3,18 @@
 </h2>
 <div>
   <form>
-    <input type="date" [(ngModel)]="startDate" name='startDate'>
-    <input type="date" [(ngModel)]="endDate" name='endDate'>
+    <div>
+      <label for="#startDate">Start Date</label>
+        <input type="date" [(ngModel)]="startDate" name='startDate' id="startDate">
+        <span *ngIf="!startDate">choose start date</span>
+    </div>
+    <div>
+      <label for="#endDate">End Date</label>
+        <input type="date" [(ngModel)]="endDate" name='endDate' id="endDate">
+        <span *ngIf="!endDate">choose end date</span>
+    </div>
     <button pButton  type="submit" (click)='getChartData()'>submit</button>
   </form>
 </div>
-<p-chart type="bar" [data]="data"></p-chart>
+<p-chart *ngIf="data; else noData" type="bar" [data]="data"></p-chart>
+<ng-template #noData>Sunbmit details to see data</ng-template>

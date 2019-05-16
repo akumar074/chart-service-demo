@@ -10,43 +10,51 @@ export class ChartComponent implements OnInit {
 
   data: any;
   endpoint = 'getData';
-  id = '';
+  id = 'dashboard1516252439345';
   startDate: Date;
   endDate: Date;
+  advertiseIds = [];
+  impressionsOffered = [];
+  cm001s = [];
 
-  constructor(private chartService: ChartService) {
-    this.data = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-          {
-              label: 'My First dataset',
-              backgroundColor: '#42A5F5',
-              borderColor: '#1E88E5',
-              data: [65, 59, 80, 81, 56, 55, 40]
-          },
-          {
-              label: 'My Second dataset',
-              backgroundColor: '#9CCC65',
-              borderColor: '#7CB342',
-              data: [28, 48, 40, 19, 86, 27, 90]
-          }
-      ]
-  }
-   }
+  constructor(private chartService: ChartService) { }
 
   ngOnInit() {
   }
 
   getChartData() {
     const inputData = {
-      '_id': 'dashboard1516252439345',
+      "id": "dashboard1516252439345",
       "dateRange": {
         "startDate": new Date(this.startDate).getTime() / 1000,
         "endDate": new Date(this.endDate).getTime() / 1000,
       }
     }
-    console.log(inputData);
-    this.chartService.getChartData( this.endpoint , inputData).subscribe(data => this.data = data);
+    this.chartService.getChartData(this.endpoint, inputData).subscribe((data: any[]) => {
+      this.advertiseIds = this.impressionsOffered = this.cm001s = [];
+      data.map(obj => {
+        this.advertiseIds.push(obj['advertiserId']);
+        this.impressionsOffered.push(Number(obj['impressions_offered']));
+        this.cm001s.push(Number(obj['CM001']));
+      });
+      this.data = {
+        labels: this.advertiseIds,
+        datasets: [
+          {
+            label: 'impressions_offered',
+            backgroundColor: '#42A5F5',
+            borderColor: '#1E88E5',
+            data: this.impressionsOffered
+          },
+          {
+            label: 'CM001',
+            backgroundColor: '#9CCC65',
+            borderColor: '#7CB342',
+            data: this.cm001s
+          }
+        ]
+      }
+    });
   }
 
 }

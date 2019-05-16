@@ -10,6 +10,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean authenticate(String token) {
-        return JWT_TOKEN == token;
+        return this.JWT_TOKEN.equals(token);
     }
 }

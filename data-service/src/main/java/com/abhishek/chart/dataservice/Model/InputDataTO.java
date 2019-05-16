@@ -1,32 +1,36 @@
 package com.abhishek.chart.dataservice.Model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class InputDataTO {
 
-    private String startDate;
+    @JsonProperty("id")
+    private String id;
 
-    private String endDate;
+    @JsonProperty("dateRange")
+    private DateRangeTO dateRangeTO;
 
     public InputDataTO() {
     }
 
-    public InputDataTO(String startDate, String endDate) {
-        this.startDate = startDate;
-        this.endDate = endDate;
+    public InputDataTO(String id, DateRangeTO dateRangeTO) {
+        this.id = id;
+        this.dateRangeTO = dateRangeTO;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getId() {
+        return id;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public DateRangeTO getDateRangeTO() {
+        return dateRangeTO;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setDateRangeTO(DateRangeTO dateRangeTO) {
+        this.dateRangeTO = dateRangeTO;
     }
 }

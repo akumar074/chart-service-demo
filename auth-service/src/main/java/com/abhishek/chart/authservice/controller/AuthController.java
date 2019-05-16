@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "getData")
 public class AuthController {
@@ -22,11 +23,14 @@ public class AuthController {
         try {
             if (authService.authenticate(authToken)) {
                 RestTemplate restTemplate = new RestTemplate();
-                String response = restTemplate.postForObject("http://localhost:8081", inputData, String.class);
+                String response = restTemplate.postForObject("http://localhost:8081/data", inputData, String.class);
+                System.out.println(response);
                 responseEntity = new ResponseEntity(response, HttpStatus.OK);
+            } else {
+                responseEntity = new ResponseEntity("User Unauthorized", HttpStatus.BAD_REQUEST);
             }
-            responseEntity = new ResponseEntity("User Unauthorized", HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
+            e.printStackTrace();
             responseEntity = new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return responseEntity;
