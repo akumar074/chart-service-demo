@@ -17,13 +17,18 @@ public class AuthController {
     AuthService authService;
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity getChartData(@RequestBody String inputData,@RequestHeader(value="authToken") String authToken ) {
-        if (authService.authenticate(authToken)) {
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.postForObject("http://localhost:8081", inputData, String.class) ;
-        } else {
-            return new ResponseEntity("User Unauthorized", HttpStatus.BAD_REQUEST);
+    public ResponseEntity getChartData(@RequestBody String inputData, @RequestHeader(value = "authToken") String authToken) {
+        ResponseEntity responseEntity;
+        try {
+            if (authService.authenticate(authToken)) {
+                RestTemplate restTemplate = new RestTemplate();
+                String response = restTemplate.postForObject("http://localhost:8081", inputData, String.class);
+                responseEntity = new ResponseEntity(response, HttpStatus.OK);
+            }
+            responseEntity = new ResponseEntity("User Unauthorized", HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            responseEntity = new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity("Bad Request", HttpStatus.BAD_REQUEST)
+        return responseEntity;
     }
 }
