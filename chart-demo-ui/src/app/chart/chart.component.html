@@ -1,0 +1,11 @@
+<h2 class="page-header">
+  Chart Service Demo
+</h2>
+<div>
+  <form>
+    <input type="date" [(ngModel)]="startDate" name='startDate'>
+    <input type="date" [(ngModel)]="endDate" name='endDate'>
+    <button pButton  type="submit" (click)='getChartData()'>submit</button>
+  </form>
+</div>
+<p-chart type="bar" [data]="data"></p-chart>
