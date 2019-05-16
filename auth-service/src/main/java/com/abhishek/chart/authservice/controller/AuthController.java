@@ -1,7 +1,9 @@
 package com.abhishek.chart.authservice.controller;
 
 import com.abhishek.chart.authservice.service.AuthService;
+import com.fasterxml.jackson.core.io.JsonStringEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +20,10 @@ public class AuthController {
     public ResponseEntity getChartData(@RequestBody String inputData,@RequestHeader(value="authToken") String authToken ) {
         if (authService.authenticate(authToken)) {
             RestTemplate restTemplate = new RestTemplate();
-
+            restTemplate.postForObject("http://localhost:8081", inputData, String.class) ;
         } else {
             return new ResponseEntity("User Unauthorized", HttpStatus.BAD_REQUEST);
         }
+        return new ResponseEntity("Bad Request", HttpStatus.BAD_REQUEST)
     }
 }
