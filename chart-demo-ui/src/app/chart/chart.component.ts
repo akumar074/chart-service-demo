@@ -31,7 +31,9 @@ export class ChartComponent implements OnInit {
       }
     }
     this.chartService.getChartData(this.endpoint, inputData).subscribe((data: any[]) => {
-      this.advertiseIds = this.impressionsOffered = this.cm001s = [];
+      this.advertiseIds = [];
+      this.impressionsOffered = [];
+      this.cm001s = [];
       data.map(obj => {
         this.advertiseIds.push(obj['advertiserId']);
         this.impressionsOffered.push(Number(obj['impressions_offered']));

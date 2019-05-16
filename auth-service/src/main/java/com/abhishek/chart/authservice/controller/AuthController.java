@@ -24,7 +24,6 @@ public class AuthController {
             if (authService.authenticate(authToken)) {
                 RestTemplate restTemplate = new RestTemplate();
                 String response = restTemplate.postForObject("http://localhost:8081/data", inputData, String.class);
-                System.out.println(response);
                 responseEntity = new ResponseEntity(response, HttpStatus.OK);
             } else {
                 responseEntity = new ResponseEntity("User Unauthorized", HttpStatus.BAD_REQUEST);
